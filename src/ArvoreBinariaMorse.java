@@ -65,13 +65,15 @@ public class ArvoreBinariaMorse {
         raiz = construirArvore(1, 6);
     }
 
-    // Método auxiliar que constrói a árvore recursivamente.
+   // Método auxiliar que constrói a árvore recursivamente.
     // Deve ser usado somente no construtor.
     private Node construirArvore(int nivelAtual, int alturaMaxima) {
+        // Caso base: Para a recursão quando o nivelAtual ficar maior que a alturaMaxima
         if (nivelAtual > alturaMaxima) {
             return null;
         }
 
+        // Caso recursivo: cria um nó e chama seus filhos recursivamente.
         Node no = new Node('\0'); // Caractere vazio para os elementos vazios.
         no.esquerda = construirArvore(nivelAtual + 1, alturaMaxima);
         no.direita = construirArvore(nivelAtual + 1, alturaMaxima);
