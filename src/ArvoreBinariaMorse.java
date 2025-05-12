@@ -164,9 +164,4 @@ public class ArvoreBinariaMorse {
         System.out.println(node.valor);
         desenhar(node.esquerda, nivel + 1);
     }
-
-    public static void main(String[] args) {
-
-    }
-
 }
