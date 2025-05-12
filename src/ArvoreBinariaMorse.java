@@ -1,5 +1,6 @@
 // Uma árvore binária para código morse.
 // Galhos à esquerda para pontos e galhos à direita para traços.
+
 public class ArvoreBinariaMorse {
     // Dois vetores para equiparar caracteres e código morse.
     private final char[] caracteres = {
@@ -8,6 +9,7 @@ public class ArvoreBinariaMorse {
             'U', 'V', 'W', 'X', 'Y', 'Z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
+
     private final char[][] morse = {
             {'.', '-'},             // A
             {'-', '.', '.', '.'},   // B
@@ -107,8 +109,51 @@ public class ArvoreBinariaMorse {
         novoNo.valor = valor;
     }
 
-    char buscar(String morse){
+    // Busca os caracteres a partir de um código morse.
+    char[] buscar(String morse_in){
+        char[] morse = convString(morse_in);
+        int espacos = 0;
 
+        // Contando a quantidade de espaços para saber quantas letras existem no morse.
+        for (int i = 0; i < morse.length; i++) {
+            if (morse[i] == ' ') espacos++;
+        }
+        char[] caracteres = new char[espacos + 1];
+
+        // Agora sim, a busca.
+        Node noAtual = raiz;
+        int cont = 0;
+
+        // Repetir para cada caractere
+        for (int i = 0; i < (espacos + 1); i++) {
+
+            // Lê o código e percorre a árvore de acordo.
+            while (morse[cont] != ' ') {
+                if (morse[cont] == '.') noAtual = noAtual.esquerda;
+                else if (morse[cont] == '-') noAtual = noAtual.direita;
+
+                cont++;
+                if (cont >= morse.length) break;
+            }
+            caracteres[i] = noAtual.valor;
+
+            noAtual = raiz; cont++;
+        }
+
+        return caracteres;
+    }
+
+    // Método auxiliar que transforma String em vetor de char.
+    char[] convString(String string){
+        int cont = 0;
+        for (int i = 0; i < string.length(); i++) cont++;
+        char[] caracteres = new char[cont];
+
+        for (int i = 0; i < string.length(); i++) {
+            caracteres[i] = string.charAt(i);
+        }
+
+        return caracteres;
     }
 
     // Desenha a árvore.
@@ -123,6 +168,10 @@ public class ArvoreBinariaMorse {
     public static void main(String[] args) {
         ArvoreBinariaMorse arvore = new ArvoreBinariaMorse();
 
+        System.out.println("Árvore a partir do construtor:\n\n");
+        arvore.desenhar(arvore.raiz, 0);
+
+        System.out.println("Inserindo os caracteres A-Z, 0-9...");
         // Inserindo caracteres A-Z
         for (char i = 65; i <= 90; i++) {
             arvore.inserir(i);
@@ -134,6 +183,17 @@ public class ArvoreBinariaMorse {
 
         System.out.println("Árvore Desenhada:\n\n");
         arvore.desenhar(arvore.raiz, 0);
+
+        // As strings devem ter suas letras separadas por espaços.
+        String teste = "... --- ...";
+        String todo_morse= ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- " +
+                "-. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.. " +
+                "----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----.";
+
+
+        System.out.println(arvore.buscar(teste));
+        System.out.println(arvore.buscar(todo_morse));
     }
 
 }
+
