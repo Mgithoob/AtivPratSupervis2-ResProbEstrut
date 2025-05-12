@@ -37,3 +37,7 @@ Contém os métodos:
 #### *Main.java*
 
 Contém o main e os testes da árvore binária.
+
+## Instruções:
+
+Dentro do arquivo *Main.java*, há todos os testes necessários para conferir se o projeto funciona de acordo com as especificações. Observar a output no terminal.
